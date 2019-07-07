@@ -121,3 +121,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.vscode/
+config/
+alpden123.checkpoint
+blacklist.txt
+comments.txt
+followed.txt
+friends.txt
+skipped.txt
+unfollowed.txt
+whitelist.txt
