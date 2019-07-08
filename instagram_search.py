@@ -26,7 +26,7 @@ def get_comments_from_post(bot, post):
     return comments
 
 
-def filter_comments_by_period(comments, filter_index=1, days=PERIOD):
+def filter_comments_by_period(comments, days, filter_index=1):
     today = datetime.datetime.now().replace(microsecond=0)
     period = datetime.timedelta(days=days)
     old_date = today - period
@@ -34,7 +34,7 @@ def filter_comments_by_period(comments, filter_index=1, days=PERIOD):
     return list(filter(lambda x: x[filter_index] >= old_date, comments))
 
 
-def print_top_posts_and_comments(search=SEARCH):
+def print_top_posts_and_comments(search=SEARCH, period=PERIOD):
     bot = create_bot()
     all_posts = bot.get_total_user_medias(search)
     all_comments = []
@@ -42,7 +42,7 @@ def print_top_posts_and_comments(search=SEARCH):
 
     for post in all_posts:
         comments = get_comments_from_post(bot, post)
-        filtered_comments = filter_comments_by_period(comments)
+        filtered_comments = filter_comments_by_period(comments, period)
         if len(filtered_comments) > 0:
             post_comments[post] = len(filtered_comments)
         all_comments.extend([comment[0] for comment in filtered_comments])
