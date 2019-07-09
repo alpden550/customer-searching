@@ -1,6 +1,7 @@
 import argparse
 from dotenv import load_dotenv
 from instagram_search import print_top_posts_and_comments
+from vk_search import print_most_active_users
 
 
 def create_parser():
@@ -15,3 +16,5 @@ if __name__ == "__main__":
     soc_network = parser.social
     if soc_network == 'instagram':
         print_top_posts_and_comments()
+    elif soc_network == 'vk':
+        print_most_active_users()
