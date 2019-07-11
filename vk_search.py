@@ -89,7 +89,7 @@ def get_all_likers(token, vk_post_id, vk_group_id, method='likes.getList'):
     return all_likers
 
 
-def print_most_active_users(group_name=VK_NAME):
+def print_vk_most_active_users(group_name=VK_NAME):
     vk_token = os.getenv('VK_TOKEN')
 
     try:
@@ -120,4 +120,4 @@ def print_most_active_users(group_name=VK_NAME):
 
 if __name__ == "__main__":
     load_dotenv()
-    print_most_active_users()
+    print_vk_most_active_users()
