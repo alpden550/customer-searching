@@ -91,8 +91,8 @@ def print_fb_most_active_users():
     if not posts:
         exit()
 
-    post_idies = [post['id'] for post in posts]
-    for post_id in post_idies:
+    post_ids = [post['id'] for post in posts]
+    for post_id in post_ids:
         post_comments = get_data_from_post(fb_token, post_id, 'comments')
         all_comments.extend(post_comments)
 
