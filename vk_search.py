@@ -1,6 +1,7 @@
 import datetime
 import os
 import requests
+import logging
 from dotenv import load_dotenv
 from instagram_search import filter_comments_by_period
 
@@ -15,12 +16,16 @@ VK_PARAMS = {
 }
 PERIOD = 14
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+VK_LOGGER = logging.getLogger('VK Logger')
+
 
 def get_group_id(token, vk_name, method='groups.getById'):
     VK_PARAMS.update({'group_id': vk_name, 'access_token': token})
     url = '{}{}'.format(VK_API, method)
     response = requests.get(url, params=VK_PARAMS).json()
     if 'error' in response:
+        VK_LOGGER.error(response['error'])
         return None
     return -response['response'][0]['id']
 

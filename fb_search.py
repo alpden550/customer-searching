@@ -3,6 +3,7 @@ from urllib.parse import urlparse, parse_qsl
 from collections import Counter
 import requests
 import datetime
+import logging
 from dotenv import load_dotenv
 from instagram_search import filter_comments_by_period
 
@@ -10,6 +11,9 @@ from instagram_search import filter_comments_by_period
 FB_GROUP_ID = 379834139328901
 FB_API = 'https://graph.facebook.com/v3.3/'
 PERIOD = 30
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+FB_LOGGER = logging.getLogger('FB Logger')
 
 
 def get_url_params(url):
@@ -25,7 +29,7 @@ def get_all_posts(token):
     posts = []
     response = requests.get(url, params=parameters).json()
     if 'error' in response:
-        print(response['error'])
+        FB_LOGGER.error(response['error'])
         return []
     posts.extend(response['data'])
 
@@ -48,7 +52,7 @@ def get_data_from_post(token, post_id, method):
     response = requests.get(url, params=parameters).json()
 
     if 'error' in response:
-        print(response['error'])
+        FB_LOGGER.error(response['error'])
         return []
     return response['data']
 
