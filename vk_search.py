@@ -89,7 +89,7 @@ def get_all_likers(token, vk_post_id, vk_group_id, method='likes.getList'):
     return all_likers
 
 
-def print_vk_most_active_users(group_name=VK_NAME):
+def print_vk_most_active_users(group_name=VK_NAME, posts_limit=50):
     vk_token = os.getenv('VK_TOKEN')
 
     vk_group_id = get_group_id(vk_token, group_name)
@@ -100,7 +100,7 @@ def print_vk_most_active_users(group_name=VK_NAME):
     all_likers = []
 
     posts = get_all_posts(vk_token, vk_group_id)
-    post_ids = [post['id'] for post in posts][:40]
+    post_ids = [post['id'] for post in posts][:posts_limit]
     for post_id in post_ids:
         comments = get_all_comments(vk_token, post_id, vk_group_id)
         filtered_comments = get_filtered_comments(comments)
