@@ -104,8 +104,7 @@ def print_vk_most_active_users(group_name=VK_NAME, posts_limit=None):
     for post_id in post_ids:
         comments = get_all_comments(vk_token, post_id, vk_group_id)
         filtered_comments = get_filtered_comments(comments)
-        active_commentators.extend([comment[0]
-                                    for comment in filtered_comments])
+        active_commentators.extend([user for user, time in filtered_comments])
 
         likers = get_all_likers(vk_token, post_id, vk_group_id)
         all_likers.extend(likers)

@@ -63,7 +63,7 @@ def get_filtered_commentators(comments_list, days=PERIOD):
             )
 
     filtered_users = filter_comments_by_period(users, days)
-    return set([user[0] for user in filtered_users])
+    return set([user for user, time in filtered_users])
 
 
 def count_reactions(reactions):

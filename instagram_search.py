@@ -45,7 +45,7 @@ def print_top_posts_and_comments(search=SEARCH, period=PERIOD):
         filtered_comments = filter_comments_by_period(comments, period)
         if len(filtered_comments) > 0:
             post_comments[post] = len(filtered_comments)
-        all_comments.extend([comment[0] for comment in filtered_comments])
+        all_comments.extend([user for user, time in filtered_comments])
 
     commentators = dict(Counter(all_comments))
     print(f'Пост : количество комментариев за последние {PERIOD} дней:', post_comments, sep='\n')
