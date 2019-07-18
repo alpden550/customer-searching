@@ -21,7 +21,7 @@ def get_group_id(token, vk_name, method='groups.getById'):
     url = '{}{}'.format(VK_API, method)
     response = requests.get(url, params=VK_PARAMS).json()
     if 'error' in response:
-        raise requests.HTTPError
+        return None
     return -response['response'][0]['id']
 
 
@@ -92,11 +92,7 @@ def get_all_likers(token, vk_post_id, vk_group_id, method='likes.getList'):
 def print_vk_most_active_users(group_name=VK_NAME):
     vk_token = os.getenv('VK_TOKEN')
 
-    try:
-        vk_group_id = get_group_id(vk_token, group_name)
-    except requests.HTTPError:
-        print('Error: requests.exceptions.HTTPError')
-        vk_group_id = None
+    vk_group_id = get_group_id(vk_token, group_name)
     if vk_group_id is None:
         exit()
 

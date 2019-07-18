@@ -55,7 +55,6 @@ def get_data_from_post(token, post_id, method):
 
 def get_filtered_commentators(comments_list, days=PERIOD):
     users = []
-    # for comments in comments_list:
     for comment in comments_list:
         if comment.get('from'):
             users.append(
