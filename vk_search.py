@@ -63,12 +63,12 @@ def get_all_comments(token, vk_post_id, vk_group_id, method='wall.getComments'):
 
 
 def get_filtered_comments(comments, days=PERIOD):
-    commentators = [(
+    all_coomments = [(
         comment.get('from_id'),
         datetime.datetime.utcfromtimestamp(comment.get('date'))
     ) for comment in comments]
     filtered_comments = filter_comments_by_period(
-        comments=commentators,
+        comments=all_coomments,
         days=days,
         filter_index=1
     )
