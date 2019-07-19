@@ -30,7 +30,7 @@ def get_group_id(token, vk_name, method='groups.getById'):
     return -response['response'][0]['id']
 
 
-def get_all_data(token, url):
+def get_all_data(token, url, posts_limit=None):
     all_data = []
     offset, counter = 0, 1
 
@@ -38,24 +38,23 @@ def get_all_data(token, url):
         VK_PARAMS.update({'offset': offset})
         response = requests.get(url, params=VK_PARAMS).json()
         if 'error' in response:
-            data = []
-            continue
+            return all_data
 
         data = response['response']['items']
         all_data.extend(data)
-        counter = response['response']['count']
+        counter = posts_limit or response['response']['count']
         offset += 100
     return all_data
 
 
-def get_all_posts(token, vk_group_id, method='wall.get', posts_limit=50):
+def get_all_posts(token, vk_group_id, method='wall.get', posts_limit=None):
     VK_PARAMS.update(
         {'access_token': token, 'filter': 'owner', 'owner_id': vk_group_id})
     url = '{}{}'.format(VK_API, method)
 
-    all_posts = get_all_data(token, url)
+    all_posts = get_all_data(token, url, posts_limit=posts_limit)
 
-    return all_posts[:posts_limit]
+    return all_posts
 
 
 def get_all_comments(token, vk_post_id, vk_group_id, method='wall.getComments'):
@@ -68,12 +67,12 @@ def get_all_comments(token, vk_post_id, vk_group_id, method='wall.getComments'):
 
 
 def get_filtered_comments(comments, days=PERIOD):
-    all_coomments = [(
+    all_comments = [(
         comment.get('from_id'),
         datetime.datetime.utcfromtimestamp(comment.get('date'))
     ) for comment in comments]
     filtered_comments = filter_comments_by_period(
-        comments=all_coomments,
+        comments=all_comments,
         days=days,
         filter_index=1
     )
@@ -104,7 +103,7 @@ def print_vk_most_active_users(group_name=VK_NAME, posts_limit=None):
     active_commentators = []
     all_likers = []
 
-    posts = get_all_posts(vk_token, vk_group_id, posts_limit=posts_limit)
+    posts = get_all_posts(vk_token, vk_group_id)
     post_ids = [post['id'] for post in posts]
     for post_id in post_ids:
         comments = get_all_comments(vk_token, post_id, vk_group_id)
