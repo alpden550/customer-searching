@@ -12,7 +12,6 @@ FB_GROUP_ID = 379834139328901
 FB_API = 'https://graph.facebook.com/v3.3/'
 PERIOD = 30
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 FB_LOGGER = logging.getLogger('FB Logger')
 
 

@@ -16,7 +16,6 @@ VK_PARAMS = {
 }
 PERIOD = 14
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 VK_LOGGER = logging.getLogger('VK Logger')
 
 
@@ -38,6 +37,7 @@ def get_all_data(token, url, posts_limit=None):
         VK_PARAMS.update({'offset': offset})
         response = requests.get(url, params=VK_PARAMS).json()
         if 'error' in response:
+            VK_LOGGER.error(response['error'])
             return all_data
 
         data = response['response']['items']
